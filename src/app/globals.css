@@ -1,0 +1,551 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   WEBNEWS design system
+   Black / red / paper, taken from the masthead. Tokens are declared once here
+   and consumed as Tailwind utilities (bg-surface, text-muted, …).
+
+   Note on the reds: --brand-red is the exact masthead value and is used ONLY
+   for the logo, where it sits at display size and contrast is not a concern.
+   UI text and buttons use the -600 / -400 steps instead, which are tuned to
+   clear WCAG AA against their own surfaces. Never swap one for the other.
+   --------------------------------------------------------------------------- */
+
+@theme {
+  --color-ink-950: oklch(0.15 0.006 264);
+  --color-ink-900: oklch(0.2 0.008 264);
+  --color-ink-800: oklch(0.26 0.008 264);
+  --color-ink-700: oklch(0.34 0.008 264);
+  --color-ink-600: oklch(0.45 0.008 264);
+  --color-ink-400: oklch(0.66 0.006 264);
+  --color-ink-200: oklch(0.88 0.004 264);
+  --color-ink-100: oklch(0.95 0.002 264);
+  --color-ink-50: oklch(0.975 0.001 264);
+
+  /* Masthead red — logo only. */
+  --color-brand-red: #fd0002;
+
+  /* Interface reds, contrast-tuned. */
+  --color-red-700: oklch(0.48 0.2 27);
+  --color-red-600: oklch(0.54 0.225 27);
+  /* 0.57 is the ceiling at which white label text still clears 4.5:1 on this fill. */
+  --color-red-500: oklch(0.57 0.235 28);
+  --color-red-400: oklch(0.71 0.185 25);
+
+  /* Reserved for alerts and correction notices — never for brand accent. */
+  --color-signal-500: oklch(0.72 0.16 65);
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    sans-serif;
+  --font-kannada: "Noto Sans Kannada", "Tunga", ui-sans-serif, sans-serif;
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 1rem;
+}
+
+/* Semantic surface tokens — flipped by the `.dark` class on <html>. */
+:root {
+  --brand-red: var(--color-brand-red);
+  --surface: var(--color-ink-50);
+  --surface-raised: #ffffff;
+  --surface-sunken: var(--color-ink-100);
+  --border-subtle: color-mix(in oklab, var(--color-ink-400) 34%, transparent);
+  --text-strong: var(--color-ink-950);
+  --text-body: var(--color-ink-700);
+  --text-muted: var(--color-ink-600);
+  --accent: var(--color-red-600);
+  --accent-solid: var(--color-red-600);
+  --accent-contrast: #ffffff;
+  color-scheme: light;
+}
+
+.dark {
+  --brand-red: var(--color-brand-red);
+  --surface: oklch(0.13 0.005 264);
+  --surface-raised: var(--color-ink-900);
+  --surface-sunken: oklch(0.17 0.006 264);
+  --border-subtle: color-mix(in oklab, var(--color-ink-400) 26%, transparent);
+  --text-strong: var(--color-ink-50);
+  --text-body: var(--color-ink-200);
+  --text-muted: var(--color-ink-400);
+  --accent: var(--color-red-400);
+  --accent-solid: var(--color-red-500);
+  --accent-contrast: #ffffff;
+  color-scheme: dark;
+}
+
+@layer base {
+  * {
+    border-color: var(--border-subtle);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+
+  body {
+    background-color: var(--surface);
+    color: var(--text-body);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  html[lang="kn-IN"] body,
+  html[lang="kn"] body {
+    font-family: var(--font-kannada);
+    line-height: 1.75;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--text-strong);
+    font-family: var(--font-display);
+    letter-spacing: -0.022em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--accent-contrast);
+  }
+}
+
+@layer utilities {
+  .bg-surface {
+    background-color: var(--surface);
+  }
+  .bg-raised {
+    background-color: var(--surface-raised);
+  }
+  .bg-sunken {
+    background-color: var(--surface-sunken);
+  }
+  .text-strong {
+    color: var(--text-strong);
+  }
+  .text-body {
+    color: var(--text-body);
+  }
+  .text-muted {
+    color: var(--text-muted);
+  }
+  .text-accent {
+    color: var(--accent);
+  }
+  /* Solid fills use the contrast-tuned step so white label text clears AA. */
+  .bg-accent {
+    background-color: var(--accent-solid);
+  }
+  .border-subtle {
+    border-color: var(--border-subtle);
+  }
+
+  /* Editorial hairline used between full-bleed sections. */
+  .rule-top {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .shell {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .shell {
+      padding-inline: 2rem;
+    }
+  }
+
+  /*
+    Masthead wash. Kept low-saturation on purpose: a full-strength red field
+    behind a red logo flattens the mark and reads as an alert, not a brand.
+  */
+  .grain {
+    background-image: radial-gradient(
+        ellipse 70% 60% at 12% 0%,
+        color-mix(in oklab, var(--color-red-500) 14%, transparent),
+        transparent 60%
+      ),
+      radial-gradient(
+        ellipse 60% 50% at 92% 4%,
+        color-mix(in oklab, var(--color-red-700) 10%, transparent),
+        transparent 55%
+      );
+  }
+
+  .card-hover {
+    transition:
+      transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in oklab, var(--accent) 55%, transparent);
+    box-shadow: 0 12px 40px -18px color-mix(in oklab, var(--accent) 60%, transparent);
+  }
+
+  .reveal {
+    animation: reveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* Smooth press interaction: a quick dip on pointer-down, then a soft
+     spring back on release. Pair with hover classes on the element. */
+  .press {
+    transition:
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      opacity 0.2s ease;
+  }
+  .press:active {
+    transform: scale(0.96);
+    transition-duration: 0.08s;
+  }
+
+  /* Dropdown/drawer entrance: light, quick and anchored to its trigger. */
+  .menu-pop {
+    transform-origin: top left;
+    animation: menu-pop 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* Soft appearance for small state indicators (e.g. loading spinners). */
+  .fade-in {
+    animation: fade-in 0.25s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
+@keyframes menu-pop {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pulse-line {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.pulse-line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--accent) 70%, transparent),
+    transparent
+  );
+  animation: pulse-line 3.5s linear infinite;
+}
+
+
+/* ---------------------------------------------------------------------------
+   Splash screen (see components/site/SplashScreen.tsx)
+
+   Always light, in either theme, and the logo is never recoloured: the mark is
+   rendered once in its exact brand fills. Depth comes from the *stage* — the
+   card the logo sits on is the thing extruded, lit and floated — so nothing
+   tints the wordmark. Do not stack recoloured copies of the mark here.
+   --------------------------------------------------------------------------- */
+
+.splash {
+  --splash-bg: var(--color-ink-50);
+  --splash-card: #ffffff;
+  --splash-edge: var(--color-ink-200);
+  --splash-edge-deep: var(--color-ink-600);
+  --splash-muted: var(--color-ink-600);
+  --splash-line: color-mix(in oklab, var(--color-ink-400) 34%, transparent);
+
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 2.25rem;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 55% 45% at 50% 36%, #ffffff, transparent 72%),
+    var(--splash-bg);
+  /* The wordmark's "Web" is `currentColor`. Pin it to the masthead black here,
+     or it inherits the page's body colour and turns grey in dark mode. */
+  color: var(--color-ink-950);
+  color-scheme: light;
+  perspective: 1200px;
+  perspective-origin: 50% 44%;
+  isolation: isolate;
+}
+
+/* Repeat loads in the same tab skip it entirely — no flash, no wait. */
+html[data-splash="off"] .splash {
+  display: none;
+}
+
+.splash-lock,
+.splash-lock body {
+  overflow: hidden;
+}
+
+.splash[data-state="leaving"] {
+  animation: splash-out 0.7s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+  pointer-events: none;
+}
+
+@keyframes splash-out {
+  to {
+    opacity: 0;
+    transform: scale(1.04);
+  }
+}
+
+/* Perspective floor, in neutral grey so it never casts colour on the mark. */
+.splash-grid {
+  position: absolute;
+  left: -60%;
+  right: -60%;
+  top: 62%;
+  bottom: -140%;
+  background-image:
+    linear-gradient(to right, var(--splash-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--splash-line) 1px, transparent 1px);
+  background-size: 90px 90px;
+  transform: rotateX(72deg);
+  transform-origin: 50% 0%;
+  /* Local coords, so this fades the plane out as it recedes to the horizon. */
+  mask-image: radial-gradient(
+    ellipse 40% 44% at 50% 0%,
+    #000 5%,
+    transparent 70%
+  );
+  animation: splash-grid-drift 2.2s linear infinite;
+  opacity: 0.7;
+}
+
+@keyframes splash-grid-drift {
+  to {
+    background-position: 0 90px;
+  }
+}
+
+.splash-stage {
+  position: relative;
+  transform-style: preserve-3d;
+  animation: splash-stage-in 1.15s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes splash-stage-in {
+  from {
+    opacity: 0;
+    transform: rotateX(18deg) rotateY(-34deg) translate3d(0, 26px, -280px);
+  }
+  to {
+    opacity: 1;
+    transform: rotateX(0) rotateY(0) translate3d(0, 0, 0);
+  }
+}
+
+/* Held slightly off-square so the card's edge stays visible. `both` fills the
+   delay with the 0% keyframe, so it never pops into the tilt. */
+.splash-card {
+  position: relative;
+  width: min(82vw, 460px);
+  transform-style: preserve-3d;
+  animation: splash-card-float 6s ease-in-out 1s infinite both;
+}
+
+@keyframes splash-card-float {
+  0%,
+  100% {
+    transform: rotateY(-11deg) rotateX(3deg) translateY(0);
+  }
+  50% {
+    transform: rotateY(-2deg) rotateX(-2deg) translateY(-9px);
+  }
+}
+
+/* The slab: stacked copies of the card body, not of the logo. */
+.splash-card-depth {
+  position: absolute;
+  inset: 0;
+  border-radius: 1.35rem;
+  background: color-mix(
+    in oklab,
+    var(--splash-edge) calc(100% - var(--d) * 4%),
+    var(--splash-edge-deep)
+  );
+  transform: translateZ(calc(var(--d) * -2.6px));
+}
+
+.splash-card-face {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: 1.35rem;
+  background: var(--splash-card);
+  padding: 2rem 2.5rem;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in oklab, var(--color-ink-400) 26%, transparent),
+    0 26px 46px -26px oklch(0.15 0.006 264 / 0.5);
+}
+
+/* The mark itself: untouched, exactly as it renders in the masthead. */
+.splash-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Contact shadow on the floor plane, tying the card to the grid. */
+.splash-shadow {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: -34%;
+  height: 90px;
+  background: radial-gradient(
+    ellipse 50% 50% at 50% 50%,
+    oklch(0.15 0.006 264 / 0.3),
+    transparent 70%
+  );
+  transform: rotateX(80deg);
+  filter: blur(8px);
+}
+
+.splash-tagline {
+  margin: 0;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.42em;
+  text-indent: 0.42em;
+  text-transform: uppercase;
+  color: var(--splash-muted);
+  animation: splash-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
+}
+
+/* Kannada is not an uppercase script and breaks under wide tracking. */
+.splash-tagline.is-kn {
+  font-family: var(--font-kannada);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-indent: 0;
+  text-transform: none;
+}
+
+.splash-bar {
+  position: relative;
+  width: min(46vw, 200px);
+  height: 2px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: color-mix(in oklab, var(--color-ink-400) 30%, transparent);
+  animation: splash-fade-in 0.6s ease 0.7s both;
+}
+
+.splash-bar span {
+  position: absolute;
+  inset: 0;
+  transform-origin: left center;
+  background: var(--color-brand-red);
+  animation: splash-bar 1.9s cubic-bezier(0.3, 0.8, 0.2, 1) 0.7s both;
+}
+
+@keyframes splash-bar {
+  from {
+    transform: scaleX(0.02);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes splash-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes splash-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* The global reduced-motion rule already collapses these to their end state;
+   drop the decorative depth cues too so nothing shifts or shimmers. */
+@media (prefers-reduced-motion: reduce) {
+  .splash-grid,
+  .splash-shadow {
+    display: none;
+  }
+  .splash-card {
+    transform: none;
+  }
+}
