@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="WebNews">
+  <!--
+    Favicon: the "E" lifted from the WEBNEWS masthead — the three slanted bars
+    of the E in "NEWS". Paths are the exact subpaths from Wordmark.tsx, so the
+    mark stays identical to the logo; the transform chain reuses the wordmark's
+    own translate/flip, then crops to the E's bounding box and centres it.
+  -->
+  <rect width="64" height="64" rx="14" fill="#fd0002" />
+  <g fill="#ffffff" transform="translate(12 15.7) scale(0.2366) translate(-941.9 653) scale(0.1 -0.1)">
+    <path d="M9426 6508 c3 -13 32 -95 64 -183 l58 -160 605 -3 605 -2 -64 172
+c-35 95 -64 179 -64 186 0 9 -128 12 -606 12 l-605 0 7 -22z" />
+    <path d="M9624 5975 c3 -8 31 -87 62 -175 l56 -160 595 0 c472 0 594 3 591 13
+-3 6 -31 85 -63 175 l-58 162 -595 0 c-525 0 -593 -2 -588 -15z" />
+    <path d="M9830 5461 c0 -5 23 -72 50 -149 28 -77 50 -145 50 -151 0 -8 162
+-11 590 -11 325 0 590 3 590 8 0 4 -24 75 -54 157 l-54 150 -586 3 c-356 1
+-586 -1 -586 -7z" />
+  </g>
+</svg>

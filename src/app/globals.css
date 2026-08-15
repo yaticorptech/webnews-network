@@ -165,6 +165,10 @@
   .border-subtle {
     border-color: var(--border-subtle);
   }
+  /* Accent edge used to mark out a highlighted block. */
+  .border-l-accent {
+    border-left-color: var(--accent);
+  }
 
   /* Editorial hairline used between full-bleed sections. */
   .rule-top {
