@@ -387,7 +387,7 @@ export const openRoles: Role[] = [
       { en: "High standards of professional conduct and representation" },
     ],
     qualification: [
-      { en: "MBA / MSW or equivalent qualification preferred." },
+      { en: "MSW, MBA, MA, MCJ and M.Com. preferred." },
       {
         en: "Candidates with exceptional communication skills, business networks and relevant professional experience may also be considered.",
       },

@@ -38,34 +38,6 @@ export default async function CareersPage({ params }: PageParams) {
         lede="We're looking for people who want to work at the intersection of media, technology and community."
       />
 
-      <Section>
-        <SectionHead eyebrow="Teams" title="The teams that build the network." />
-        <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {careerTeams.map((team) => (
-            <li key={team.slug}>
-              <Card interactive className="h-full">
-                <h2 className="text-lg font-semibold text-strong">
-                  {t(team.title, locale)}
-                </h2>
-                <ul className="mt-3 space-y-2">
-                  {team.roles.map((role) => (
-                    <li
-                      key={role.en}
-                      className="flex gap-2 text-sm leading-relaxed text-muted"
-                    >
-                      <span aria-hidden className="text-accent">
-                        —
-                      </span>
-                      {t(role, locale)}
-                    </li>
-                  ))}
-                </ul>
-              </Card>
-            </li>
-          ))}
-        </ul>
-      </Section>
-
       <Section tone="sunken" id="open-positions">
         <SectionHead
           eyebrow="Current openings"
@@ -163,7 +135,7 @@ export default async function CareersPage({ params }: PageParams) {
                       </div>
 
                       {/* ---------------------------------- qualification */}
-                      <div>
+                      <div className="rounded-2xl border border-subtle border-l-4 border-l-accent bg-sunken p-5 md:p-6">
                         <h4 className="text-xs font-semibold uppercase tracking-[0.16em] text-accent">
                           Qualification
                         </h4>
@@ -171,7 +143,11 @@ export default async function CareersPage({ params }: PageParams) {
                           {r.qualification.map((p, i) => (
                             <p
                               key={i}
-                              className="text-sm leading-relaxed text-muted"
+                              className={
+                                i === 0
+                                  ? "text-base font-semibold leading-relaxed text-strong"
+                                  : "text-sm leading-relaxed text-muted"
+                              }
                             >
                               {t(p, locale)}
                             </p>
@@ -246,6 +222,34 @@ export default async function CareersPage({ params }: PageParams) {
       </Section>
 
       <Section>
+        <SectionHead eyebrow="Teams" title="The teams that build the network." />
+        <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {careerTeams.map((team) => (
+            <li key={team.slug}>
+              <Card interactive className="h-full">
+                <h2 className="text-lg font-semibold text-strong">
+                  {t(team.title, locale)}
+                </h2>
+                <ul className="mt-3 space-y-2">
+                  {team.roles.map((role) => (
+                    <li
+                      key={role.en}
+                      className="flex gap-2 text-sm leading-relaxed text-muted"
+                    >
+                      <span aria-hidden className="text-accent">
+                        —
+                      </span>
+                      {t(role, locale)}
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      <Section tone="sunken">
         <SectionHead
           eyebrow="Beyond full-time roles"
           title="Be the voice of your community."
